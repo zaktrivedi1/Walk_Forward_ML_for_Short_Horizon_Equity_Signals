@@ -5,8 +5,8 @@
 **Next Steps:** Currently, I have a robust walk forward ML pipeline, with portfolio construction and realistic backtesting which includes costs - satisfying the goal of this project of building a machine learning model in a quantitative finance context. 
 
 The strategy itself, using a daily horizon and simple features, is currently unprofitable but this code is structured for iteration. Future steps to create an edge could include:
-- Predict excess returns (above eg. SNP500) instead of raw returns. 
-- Increase label horizon to boost signal to noise ratio. 
+- Predicting excess returns (above eg. SNP500) instead of raw returns. 
+- Increasing label horizon to boost signal to noise ratio. 
 - Reducing transaction costs by smoothing weights or trading less frequently.
 
 ## Highlights
