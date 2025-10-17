@@ -9,3 +9,5 @@
 - **Portfolio:** Top-N long / bottom-N short, caps gross leverage, transaction costs.
 - **Reporting:** Equity curve, drawdown, yearly Sharpe/CAGR, turnover.
 
+![Equity Curve](reports/figures/equity_curve.png)
+![Drawdown](reports/figures/drawdown.png)
