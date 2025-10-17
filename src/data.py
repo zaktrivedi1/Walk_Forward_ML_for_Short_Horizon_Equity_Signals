@@ -1,4 +1,3 @@
-# src/data.py
 from __future__ import annotations
 
 import os
@@ -50,10 +49,10 @@ def download_ohlcv(
     """
     Download OHLCV with yfinance and return a clean, column-harmonized MultiIndex DataFrame.
 
-    Notes on shape (this is a common pain point):
+    Notes on shape:
     - yfinance.download returns a wide DataFrame with column level 0 = fields and level 1 = tickers.
       We transpose/reorder into columns level 0 = tickers and level 1 = fields.
-    - We include both Close and Adj Close. We'll use Adj Close for returns; raw Close is handy for sanity checks.
+    - Includes both Close and Adj Close. Adj Close used for returns; raw Close is handy for sanity checks.
 
     Parameters
     ----------
@@ -66,7 +65,7 @@ def download_ohlcv(
     interval : str
         "1d" (daily) for this project
     auto_adjust : bool
-        If True, yfinance returns adjusted prices but *drops* Adj Close. We keep False and request Adj Close explicitly.
+        If True, yfinance returns adjusted prices but drops Adj Close. False kept and Adj Close requested explicitly.
     progress : bool
         Show yfinance download progress.
     """
@@ -80,7 +79,7 @@ def download_ohlcv(
         end=end,
         interval=interval,
         auto_adjust=auto_adjust,
-        group_by="ticker",   # IMPORTANT: yfinance will try to put tickers on level 0
+        group_by="ticker",   
         progress=progress,
         threads=True,
     )
@@ -121,7 +120,7 @@ def download_ohlcv(
         "Close": "close",
         "Adj Close": "adj_close",
         "Volume": "volume",
-        # be robust if already lowercase or mixed
+        # to be robust if already lowercase or mixed
         "open": "open",
         "high": "high",
         "low": "low",
@@ -171,16 +170,6 @@ def _ensure_all_fields(df: pd.DataFrame, fields: List[str]) -> pd.DataFrame:
 def align_calendar_daily(data: OHLCVData, drop_weekends: bool = True) -> OHLCVData:
     """
     Aligns index to a common daily calendar across all tickers.
-
-    Why this matters (the tricky bit):
-    - Different tickers can have slightly different trading calendars (IPO dates, halts, data gaps).
-    - For cross-sectional ML, we need the *same* index each day across tickers.
-    - We align to a daily business-day calendar (Mon–Fri). This introduces rows on holidays.
-      We then forward-fill *prices* but NOT volumes, to avoid fake liquidity.
-
-    Trade-off:
-    - Using a strict exchange calendar (e.g., NYSE) is even better, but adds deps (e.g., `pandas-market-calendars`).
-      For this project, business-day alignment is a solid and lightweight default.
     """
     df = data.df.copy()
 

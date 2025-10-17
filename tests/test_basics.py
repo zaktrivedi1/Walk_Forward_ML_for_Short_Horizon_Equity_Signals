@@ -17,9 +17,9 @@ def test_label_alignment_next_day():
     idx = pd.date_range("2020-01-01", periods=5, freq="B")
     prices = pd.DataFrame({"A":[100,101,100,102,103]}, index=idx)
     r1 = prices.pct_change(1)
-    y = r1.shift(-1)  # our definition
+    y = r1.shift(-1)  
 
-    # Check a spot: label at t equals return from t->t+1
+    # Check: label at t equals return from t->t+1
     t = idx[1]  # 2020-01-02
     expected = (prices.loc[idx[2], "A"] / prices.loc[idx[1], "A"] - 1.0)
     assert abs(y.loc[t, "A"] - expected) < 1e-12

@@ -13,7 +13,7 @@ def make_next_day_return_label(data: OHLCVData) -> pd.DataFrame:
     Returns a DataFrame with columns=tickers, index=dates,
     where each value is the next-day return based on adj_close.
 
-    Alignment detail (important):
+    Alignment detail:
       - label[t] = (price[t+1] / price[t] - 1)
       - i.e., we SHIFT(-1) the price before pct_change(1), or equivalently shift the returns.
     """

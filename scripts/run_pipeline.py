@@ -25,8 +25,8 @@ def main():
 
     # Model / walk-forward settings
     retrain_freq = "M"        # "M" monthly, "W" weekly (faster), "D" daily (slow)
-    min_train_days = 126      # try 126; raise to 252 later for rigor
-    model_factory = default_model_factory  # or fast_model_factory if you added it
+    min_train_days = 126      
+    model_factory = default_model_factory  
 
     # Portfolio settings
     top_n = 2

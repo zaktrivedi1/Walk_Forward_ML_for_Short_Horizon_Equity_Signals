@@ -1,16 +1,15 @@
-# src/backtest.py
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
 from typing import Dict
 import matplotlib
-matplotlib.use("Agg")  # safe for headless runs (VS Code terminal)
+matplotlib.use("Agg")  
 import matplotlib.pyplot as plt
 
 def portfolio_returns(
     weights: pd.DataFrame,  # dates x tickers (weight at close t to hold next day)
-    next_day_returns: pd.DataFrame,  # dates x tickers (this is your label matrix)
+    next_day_returns: pd.DataFrame,  # dates x tickers (label matrix)
     costs: pd.Series,       # daily costs (negative)
 ) -> pd.Series:
     """

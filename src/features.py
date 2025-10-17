@@ -54,7 +54,6 @@ def _atr(high: pd.DataFrame, low: pd.DataFrame, close: pd.DataFrame, window: int
     
     candidates = pd.concat([tr1, tr2, tr3], axis=1, keys=["tr1", "tr2", "tr3"])
 
-    # Take the max across candidates for each ticker (avoid deprecated level= on .max)
     # Do groupby on the transposed view (no axis=1 deprecation), then transpose back.
     tr = candidates.T.groupby(level=1).max().T  # columns now back to tickers
 
@@ -84,7 +83,7 @@ def make_feature_panel(data: OHLCVData) -> pd.DataFrame:
     ret_20d = _pct_change(close, 20)
 
     # === Momentum z-scores (based on trailing returns) ===
-    # Use rolling mean/std on *past* returns; returns already use past info.
+    # Use rolling mean/std on past returns; returns already use past info.
     mom_5d_z = _zscore(ret_5d, 60)
     mom_10d_z = _zscore(ret_10d, 60)
     mom_20d_z = _zscore(ret_20d, 60)

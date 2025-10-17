@@ -19,7 +19,7 @@ def _to_long_labels(y_wide: pd.DataFrame) -> pd.Series:
     return y_long
 
 def default_model_factory() -> GradientBoostingRegressor:
-    # Simple, fast, decent baseline; tune later if you like
+    # Simple, fast, decent baseline
     return GradientBoostingRegressor(
         n_estimators=300,
         max_depth=3,
@@ -33,7 +33,7 @@ def walkforward_predict(
     y_universe: pd.DataFrame,           # wide: columns=tickers
     train_start: Optional[str] = None,  # e.g., "2013-01-01"
     retrain_freq: str = "M",            # "M" (monthly), "W" (weekly), "D" (daily)
-    min_train_days: int = 126,          # start with ~6 months; can raise to 252 later
+    min_train_days: int = 126,          
     model_factory: Callable[[], object] = default_model_factory,
 ) -> pd.DataFrame:
     """
@@ -54,7 +54,7 @@ def walkforward_predict(
     df = df.sort_index()  # by (date, ticker)
     dates = df.index.get_level_values("date")
 
-    # Ensure we have a proper DatetimeIndex of unique trading dates
+    # Ensure a proper DatetimeIndex of unique trading dates
     unique_dates = pd.DatetimeIndex(sorted(dates.unique()))
     # Do NOT filter cut points by train_start; enforce via train_mask instead
 
