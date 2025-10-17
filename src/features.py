@@ -1,4 +1,3 @@
-# src/features.py
 from __future__ import annotations
 
 import numpy as np
@@ -9,7 +8,6 @@ from .data import OHLCVData
 
 
 def _pct_change(df: pd.DataFrame, periods: int = 1) -> pd.DataFrame:
-    # pandas 2.x: avoid deprecated default fill_method
     return df.pct_change(periods=periods, fill_method=None)
 
 
@@ -53,9 +51,7 @@ def _atr(high: pd.DataFrame, low: pd.DataFrame, close: pd.DataFrame, window: int
     tr1 = high - low
     tr2 = (high - prev_close).abs()
     tr3 = (low - prev_close).abs()
-
-    # Build candidates with an extra top level so we can reduce across them
-    # Resulting columns are a MultiIndex: [candidate, ticker]
+    
     candidates = pd.concat([tr1, tr2, tr3], axis=1, keys=["tr1", "tr2", "tr3"])
 
     # Take the max across candidates for each ticker (avoid deprecated level= on .max)
