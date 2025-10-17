@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import pandas as pd
+import time
 
 from src.data import prepare_data_pipeline
 from src.features import make_feature_panel, select_universe_features
@@ -99,4 +100,7 @@ def main():
     print("Saved: reports/tables/summary.csv, yearly_metrics.csv")
 
 if __name__ == "__main__":
+    t0 = time.perf_counter()
     main()
+    t1 = time.perf_counter()
+    print(f"\n Total runtime: {t1 - t0:.2f} seconds")
